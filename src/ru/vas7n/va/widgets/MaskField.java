@@ -15,31 +15,30 @@
  *
  */
 
-package ru.vas7n.va.widgets;
+package br.com.sev.admin.widgets;
 
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextField;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MaskField extends TextField {
 
-
     /**
-     * позиция в маске позволит ввести только цифры
+     * Digits mask
      */
     public static final char MASK_DIGIT = 'D';
 
     /**
-     * позиция в маске позволит ввести буквы и цифры
+     * Digits and chars mask
      */
     public static final char MASK_DIG_OR_CHAR = 'W';
 
     /**
-     * позиция в маске позволит ввести только буквы
+     * Chars mask
      */
     public static final char MASK_CHARACTER = 'A';
 
@@ -54,7 +53,7 @@ public class MaskField extends TextField {
     private List<Position> objectMask = new ArrayList<>();
 
     /**
-     * простой текст без применения маски
+     * Text with no mask
      */
     private StringProperty plainText;
 
@@ -75,7 +74,7 @@ public class MaskField extends TextField {
 
 
     /**
-     * это сама маска видимая в поле ввода
+     * This is the mask itself visible in the input field
      */
     private StringProperty mask;
 
@@ -98,7 +97,7 @@ public class MaskField extends TextField {
 
 
     /**
-     * если маска должна отображать символы которые зарезервированы для маски, то задается дополнительная подсказка где символ маски, а где просто символ
+     * If the mask should display characters that are reserved for the mask, then an additional hint is given where the mask symbol is, and where just
      */
     private StringProperty whatMask;
 
@@ -121,7 +120,7 @@ public class MaskField extends TextField {
 
 
     /**
-     * это символы замещения
+     * These are substitution symbols
      */
     private StringProperty placeholder;
 
@@ -175,7 +174,7 @@ public class MaskField extends TextField {
 
 
     /**
-     * формирует список объектов Position по каждому символу маски
+     * Generates a list of Position objects for each mask character
      */
     private void rebuildObjectMask() {
         objectMask = new ArrayList<>();
@@ -186,15 +185,16 @@ public class MaskField extends TextField {
             char p = PLACEHOLDER_CHAR_DEFAULT;
 
             if (getWhatMask() != null && i < getWhatMask().length()) {
-                //конкретно указано символ маски это или нет
+                //Specified mask symbol or not
                 if (getWhatMask().charAt(i) != WHAT_MASK_CHAR) {
                     w = WHAT_MASK_NO_CHAR;
                 }
             }
             else
             {
-                //так как не указано что за символ - понимаем самостоятельно
-                //и если символ не находится среди символов маски - то это считается простым литералом
+            	/* Since it is not specified what kind of character we understand ourselves
+            	and if the character is not among the characters of the mask - then it is
+            	considered a simple literal */
                 if (m != MASK_CHARACTER && m != MASK_DIG_OR_CHAR && m != MASK_DIGIT)
                     w = WHAT_MASK_NO_CHAR;
 
@@ -209,8 +209,8 @@ public class MaskField extends TextField {
 
 
     /**
-     * функция как бы накладывает просто текст plainText на заданную маску,
-     * корректирует позицию каретки
+     * The function simply imposes plain text plainText on the given mask,
+     * corrects the position of the carriage
      */
     private void updateShowingField()
     {
@@ -227,7 +227,7 @@ public class MaskField extends TextField {
                     char c = textPlain.charAt(counterPlainCharInMask);
                     while (!p.isCorrect(c))
                     {
-                        //вырезаем то что не подошло
+                    	//Cut that did not fit
                         textPlain = textPlain.substring(0, counterPlainCharInMask) + textPlain.substring(counterPlainCharInMask + 1);
 
                         if (textPlain.length() > counterPlainCharInMask)
