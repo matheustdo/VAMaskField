@@ -15,7 +15,7 @@
  *
  */
 
-package br.com.sev.admin.widgets;
+package ru.vas7n.va.widgets;
 
 
 import java.util.ArrayList;
